@@ -14,7 +14,7 @@ def init_net(nodes, children, feature_size, encoder_size):
         enc = encoder_layer(nodes, children, feature_size, encoder_size)
 
         # (batch_size x split_size x feature_size)
-        gru_out = bigru_layer(enc, encoder_size, feature_size, 1)
+        gru_out = bigru_layer(enc, encoder_size)
         # (batch_size x feature_size x split_size)
         gru_out = tf.transpose(gru_out, perm=[0, 2, 1])
 
