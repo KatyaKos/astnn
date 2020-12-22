@@ -75,9 +75,8 @@ def traverse_mul(nodes, children, node_list, features_size, encoder_size):
         batch_size = tf.shape(nodes)[0]
         nodes_size = nodes.get_shape().as_list()[1]
         # (batch_size x num_nodes x encoder_size)
-        encoded_list = [W_c(nodes, features_size, encoder_size)]
+        encoded_nodes = W_c(nodes, features_size, encoder_size)
         for j in range(nodes_size - 1, -1, -1):
-            encoded_nodes = encoded_list[-1]
             # (batch_size x num_children x encoder_size)
             current_children = children_tensor(encoded_nodes, children, j, encoder_size)
             # (batch_size x  encoder_size)
@@ -88,8 +87,7 @@ def traverse_mul(nodes, children, node_list, features_size, encoder_size):
             new_node_vector = current_nodes + children_sum
 
             update_indices = tf.concat([tf.reshape(tf.range(batch_size), (-1, 1)), tf.fill([batch_size, 1], j)], axis=1)
-            new_enc_nodes = tf.tensor_scatter_nd_update(encoded_nodes, update_indices, new_node_vector)
-            encoded_list.append(new_enc_nodes)
+            encoded_nodes = tf.tensor_scatter_nd_update(encoded_nodes, update_indices, new_node_vector)
 
             node_list.append(new_node_vector)
 
