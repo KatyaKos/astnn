@@ -98,7 +98,7 @@ class ASTNNEncoder(ASTEncoder):
             nodes = self.embedding_layer(self.placeholders['node_type_ids'])
             children = self.placeholders['children']
             hidden = astnn_network.init_net(nodes, children, self.get_hyper('type_embedding_size'),
-                                            self.get_hyper('type_encoder_size'))
+                                            self.get_hyper('tree_encoder_size'))
         return hidden
 
     def _make_placeholders(self):
