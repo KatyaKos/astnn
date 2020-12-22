@@ -40,7 +40,7 @@ class ASTEncoder(Encoder):
       'type_vocab_count_threshold': 10,
       'type_embedding_size': 128,
 
-      'max_num_nodes': 100,
+      'max_num_nodes': 200,
       #'max_num_children': 50
     }
     hypers = super().get_default_hyperparameters()
