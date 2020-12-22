@@ -119,7 +119,7 @@ def children_tensor(nodes, children, num_node, encoder_size):
         children_indices = tf.reshape(children_indices, (batch_size, -1, 1))
         # (batch_size x num_children x 1)
         batch_indices = tf.tile(tf.reshape(tf.range(0, batch_size), (batch_size, 1, 1)), [1, children_size, 1],
-                                name='batch_indices').eval()
+                                name='batch_indices')
         # (batch_size x num_children x 2)
         children_indices = tf.concat([batch_indices, children_indices], axis=2, name='children_indices')
         # (batch_size x num_children x encoder_size)
