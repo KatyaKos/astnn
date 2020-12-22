@@ -132,6 +132,6 @@ class ASTNNEncoder(ASTEncoder):
         super().minibatch_to_feed_dict(batch_data, feed_dict, is_train)
         node_type_ids = batch_data['node_type_ids']
         children = batch_data['children']
-        node_type_ids, children = astnn_network.pad_batch(node_type_ids, children)
+        node_type_ids, children = astnn_network.pad_batch(node_type_ids, children, self.get_hyper('max_num_nodes'))
         tfutils.write_to_feed_dict(feed_dict, self.placeholders['node_type_ids'], node_type_ids)
         tfutils.write_to_feed_dict(feed_dict, self.placeholders['children'], children)
