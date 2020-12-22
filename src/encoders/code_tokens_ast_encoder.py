@@ -9,7 +9,7 @@ from .utils import tree_processing
 
 class CodeTokensASTEncoder(Encoder):
   CODE_ENCODER_CLASS = NBoWEncoder
-  AST_ENCODER_CLASS = TBCNNEncoder
+  AST_ENCODER_CLASS = ASTNNEncoder
   CODE_ENCODER_LABEL = 'code_encoder'
   AST_ENCODER_LABEL = 'ast_encoder'
 
