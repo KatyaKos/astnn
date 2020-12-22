@@ -104,7 +104,7 @@ class ASTNNEncoder(ASTEncoder):
 
     def _make_placeholders(self):
         super()._make_placeholders()
-        self.placeholders['node_type_ids'] = tf.placeholder(tf.int32, shape=[None, None, None], name='node_type_ids')
+        self.placeholders['node_type_ids'] = tf.placeholder(tf.int32, shape=[None, None, self.get_hyper('max_num_nodes')], name='node_type_ids')
         self.placeholders['children'] = tf.placeholder(tf.int32, shape=(None, None, None, None), name='children')
 
     @classmethod

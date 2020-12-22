@@ -103,7 +103,7 @@ def traverse_mul(nodes, children, node_list, features_size, encoder_size):
 
 def children_tensor(nodes, children, num_node, encoder_size):
     with tf.name_scope('sum_children'):
-        batch_size = nodes.get_shape().as_list()[0]
+        batch_size = tf.shape(nodes)[0]
         zero_vecs = tf.zeros((batch_size, 1, encoder_size), tf.int32)
         # (batch_size x num_nodes x encoder_size)
         node_vectors = tf.concat([zero_vecs, nodes[:, 1:, :]], axis=1)
