@@ -59,7 +59,7 @@ def encoder_layer(nodes, children, features_size, encoder_size):
             children_size = tf.shape(children)[3]
             print('encode layer')
             print(nodes.get_shape().as_list(), children.get_shape().as_list())
-            print(batch_size, nodes_size, children_size)
+            print(batch_size.eval(), nodes_size.eval(), children_size.eval())
             split_nodes = tf.reshape(nodes, (-1, nodes_size, features_size))
             split_children = tf.reshape(children, (-1, nodes_size, children_size))
 

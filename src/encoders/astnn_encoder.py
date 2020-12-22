@@ -97,7 +97,6 @@ class ASTNNEncoder(ASTEncoder):
 
             nodes = self.embedding_layer(self.placeholders['node_type_ids'])
             children = self.placeholders['children']
-            print("make model", tf.shape(nodes), tf.shape(children))
             hidden = astnn_network.init_net(nodes, children, self.get_hyper('type_embedding_size'),
                                             self.get_hyper('tree_encoder_size'))
         return hidden
@@ -105,14 +104,13 @@ class ASTNNEncoder(ASTEncoder):
     def _make_placeholders(self):
         super()._make_placeholders()
         self.placeholders['node_type_ids'] = tf.placeholder(tf.int32, shape=[None, None, self.get_hyper('max_num_nodes')], name='node_type_ids')
-        self.placeholders['children'] = tf.placeholder(tf.int32, shape=(None, None, None, None), name='children')
+        self.placeholders['children'] = tf.placeholder(tf.int32, shape=(None, None, self.get_hyper('max_num_nodes'), None), name='children')
 
     @classmethod
     def load_data_from_sample(cls, encoder_label: str, hyperparameters: Dict[str, Any], metadata: Dict[str, Any],
                               data_to_load: Any, function_name: Optional[str], result_holder: Dict[str, Any],
                               is_test: bool = True) -> bool:
         nodes, children = _linearize_and_split_tree_bfs(data_to_load, hyperparameters[f'{encoder_label}_max_num_nodes'])
-        print("load data", len(nodes), len(nodes[0]), len(children), len(children[0]), len(children[0][0]))
         def convert_and_pad(nodes_):
             n = len(nodes_)
             node_types = [node['type'] for node in nodes_]
