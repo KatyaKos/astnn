@@ -4,10 +4,6 @@ import tensorflow as tf
 
 def init_net(nodes, children, feature_size, encoder_size):
     """Initialize an empty network."""
-    print("init")
-    print(nodes.get_shape().as_list())
-    print(children.get_shape().as_list())
-    print(feature_size, encoder_size)
 
     with tf.name_scope('network'):
         # (batch_size x split_size x encoder_size)
@@ -27,9 +23,9 @@ def init_net(nodes, children, feature_size, encoder_size):
         tf.summary.scalar('tree_size', tf.shape(nodes)[2])
         tf.summary.scalar('child_size', tf.shape(children)[3])
         tf.summary.histogram('logits', hidden)
-        tf.summary.image('inputs', tf.expand_dims(nodes, axis=4))
-        tf.summary.image('enc', tf.expand_dims(enc, axis=4))
-        tf.summary.image('bigru', tf.expand_dims(gru_out, axis=4))
+        tf.summary.image('inputs', tf.expand_dims(nodes, axis=3))
+        tf.summary.image('enc', tf.expand_dims(enc, axis=3))
+        tf.summary.image('bigru', tf.expand_dims(gru_out, axis=3))
 
     return hidden
 
@@ -57,9 +53,6 @@ def encoder_layer(nodes, children, features_size, encoder_size):
             batch_size = tf.shape(nodes)[0]
             nodes_size = nodes.get_shape().as_list()[2]
             children_size = tf.shape(children)[3]
-            print('encode layer')
-            print(nodes.get_shape().as_list(), children.get_shape().as_list())
-            print(batch_size, nodes_size, children_size)
             split_nodes = tf.reshape(nodes, (-1, nodes_size, features_size))
             split_children = tf.reshape(children, (-1, nodes_size, children_size))
 
@@ -80,7 +73,6 @@ def encoder_layer(nodes, children, features_size, encoder_size):
 def traverse_mul(nodes, children, node_list, features_size, encoder_size):
     with tf.name_scope('split_encoder_node'):
         nodes_size = nodes.get_shape().as_list()[1]
-        print("traverse", nodes.get_shape().as_list())
         # (batch_size x num_nodes x encoder_size)
         encoded_nodes = W_c(nodes, features_size, encoder_size)
         for j in range(nodes_size - 1, -1, -1):
