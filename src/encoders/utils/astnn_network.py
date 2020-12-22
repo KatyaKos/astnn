@@ -4,6 +4,9 @@ import tensorflow as tf
 
 def init_net(nodes, children, feature_size, encoder_size):
     """Initialize an empty network."""
+    print(tf.shape(nodes))
+    print(tf.shape(children))
+    print(feature_size, encoder_size)
 
     with tf.name_scope('network'):
         # (batch_size x split_size x encoder_size)
@@ -73,6 +76,7 @@ def encoder_layer(nodes, children, features_size, encoder_size):
 def traverse_mul(nodes, children, node_list, features_size, encoder_size):
     with tf.name_scope('split_encoder_node'):
         nodes_size = nodes.get_shape().as_list()[1]
+        print(nodes.get_shape().as_list())
         # (batch_size x num_nodes x encoder_size)
         encoded_nodes = W_c(nodes, features_size, encoder_size)
         for j in range(nodes_size - 1, -1, -1):
