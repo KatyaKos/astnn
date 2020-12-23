@@ -83,6 +83,7 @@ class ASTEncoder(Encoder):
                                 mark_subtoken_end: bool = False) -> None:
     default_hypers = cls.get_default_hyperparameters()
     node_types = _get_tree_types_seq(data_to_load, default_hypers['max_num_nodes'])
+    print(node_types)
     raw_metadata['type_counter'].update(node_types)
 
   @classmethod
