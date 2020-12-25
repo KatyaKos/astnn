@@ -739,7 +739,9 @@ class Model(ABC):
             if not quiet or (minibatch_counter % 100) == 99:
                 print("%s: Batch %5i (has %i samples). Processed %i samples. Loss so far: %.4f.  MRR so far: %.4f "
                       % (epoch_name, minibatch_counter, samples_in_batch,
-                         samples_used_so_far - samples_in_batch, loss, mrr))
+                         samples_used_so_far - samples_in_batch, loss, mrr),
+                      flush=True,
+                      end="\r" if not quiet else '\n')
                 printed_one_line = True
             ops_to_run = {'loss': self.__ops['loss'], 'mrr': self.__ops['mrr']}
             if is_train:
